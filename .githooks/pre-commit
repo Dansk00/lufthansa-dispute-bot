@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# .githooks/pre-commit — block commits that introduce UTF-8 BOM.
+set -euo pipefail
+
+# ── WHITELIST (paths that may legitimately start with EF BB BF) ──
+WHITELIST=(
+  "src/canary-*.ts"
+)
+in_whitelist() { local p="$1" pat; for pat in "${WHITELIST[@]}"; do [[ "$p" == $pat ]] && return 0; done; return 1; }
+
+# ── Collect staged files (Added/Copied/Modified/Renamed), quoting-safe ──
+# With `-z`, numstat emits one NUL-terminated record per file; within each
+# record the three fields are TAB-separated: "<add>\t<del>\t<path>".
+# Use IFS=tab so `read` splits fields correctly inside each NUL-terminated record.
+BOM_FILES=()
+while IFS=$'\t' read -r -d '' add del path; do
+  [[ -z "$path" ]] && continue
+  [[ "$add" == "-" || "$del" == "-" ]] && continue
+  in_whitelist "$path" && continue
+  # Read the first 3 bytes from the STAGED BLOB (not the working tree) to
+  # avoid TOCTOU between `git add` and `git commit`. `git show` exits non-zero
+  # if the path is not in the index; ignore that case (deleted/modified race).
+  first3="$( (git show ":0:${path}" 2>/dev/null || true) | head -c 3 | od -An -tx1 | tr -d ' \n')"
+  [[ "$first3" == "efbbbf" ]] && BOM_FILES+=("$path")
+done < <(git -c core.quotepath=false diff --cached --numstat --diff-filter=ACMR -z -- .)
+
+if [[ ${#BOM_FILES[@]} -gt 0 ]]; then
+  # shell-escape each filename for safe display + per-file copy-paste:
+  # single-quote, replace embedded ' with '\''
+  esc() { local p="$1"; printf "'%s'" "${p//\'/\'\\\'\'}"; }
+  report_blocked() {
+    printf '\033[31m✗ BOM detected in %d staged file(s):\033[0m\n' "${#BOM_FILES[@]}"
+    printf '  - %s\n' "${BOM_FILES[@]}"
+    printf 'Fix each file (run from repo root):\n'
+    local p
+    for p in "${BOM_FILES[@]}"; do
+      printf '  powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-encoding.ps1 --fix %s\n' "$(esc "$p")"
+    done
+  }
+  report_blocked >&2
+  exit 1
+fi
+exit 0

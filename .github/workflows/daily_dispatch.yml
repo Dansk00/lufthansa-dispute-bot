@@ -1,0 +1,38 @@
+name: Daily Lufthansa Dispute Submission
+
+on:
+  schedule:
+    # Rodar todos os dias às 12:00 UTC (09:00 Horário de Brasília)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permite disparar manualmente pelo botão no GitHub
+
+jobs:
+  dispatch-lufthansa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Dependências & Chromium
+        run: |
+          pip install -r lufthansa_bot/requirements.txt
+          python -m patchright install --with-deps chromium
+
+      - name: Executar Robô de Envio
+        env:
+          HEADLESS: "true"
+        run: |
+          python lufthansa_bot/main.py run --headless
+
+      - name: Salvar Comprovantes de Evidência
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lufthansa-receipt-screenshots
+          path: lufthansa_bot/data/evidence/*.png
+          retention-days: 60

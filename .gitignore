@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite
+.planning/
+.venv/
+env/
+venv/
+node_modules/
+.dockerignore

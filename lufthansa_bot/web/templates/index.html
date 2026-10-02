@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lufthansa Dispute Operations Hub | Case FB ID 42525052</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-surface: #111827;
+      --bg-card: #1e293b;
+      --bg-card-hover: #24344d;
+      --border-subtle: #334155;
+      --border-focus: #0284c7;
+      
+      --color-primary: #0284c7;
+      --color-primary-hover: #0369a1;
+      --color-primary-glow: rgba(2, 132, 199, 0.25);
+      
+      --color-accent: #f59e0b;
+      --color-accent-subtle: rgba(245, 158, 11, 0.15);
+      --color-accent-border: rgba(245, 158, 11, 0.35);
+      
+      --color-success: #10b981;
+      --color-success-subtle: rgba(16, 185, 129, 0.15);
+      --color-success-border: rgba(16, 185, 129, 0.35);
+      
+      --color-danger: #ef4444;
+      --color-danger-subtle: rgba(239, 68, 68, 0.15);
+      
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-pill: 9999px;
+      
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+      
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Header */
+    header {
+      background-color: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .logo-icon-box {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #0284c7, #1e3a8a);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px var(--color-primary-glow);
+    }
+
+    .logo-icon-box svg {
+      width: 22px;
+      height: 22px;
+      color: #fff;
+    }
+
+    .brand-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .case-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .badge-primary {
+      background-color: rgba(2, 132, 199, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .badge-accent {
+      background-color: var(--color-accent-subtle);
+      color: #fbbf24;
+      border: 1px solid var(--color-accent-border);
+    }
+
+    .badge-success {
+      background-color: var(--color-success-subtle);
+      color: #34d399;
+      border: 1px solid var(--color-success-border);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    .badge-dot-pulse {
+      animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: var(--transition);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-primary-hover);
+      box-shadow: 0 0 20px rgba(2, 132, 199, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background-color: #1e293b;
+      color: var(--text-main);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-card-hover);
+      border-color: #475569;
+    }
+
+    .btn-danger {
+      background-color: var(--color-danger-subtle);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-danger:hover {
+      background-color: rgba(239, 68, 68, 0.25);
+    }
+
+    /* Navigation Tabs Bar */
+    .tabs-bar {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 24px;
+    }
+
+    .tabs-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px;
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn svg {
+      width: 17px;
+      height: 17px;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .tab-btn.active {
+      color: #38bdf8;
+      font-weight: 600;
+      border-bottom-color: #0284c7;
+    }
+
+    .tab-btn.active svg {
+      color: #38bdf8;
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .kpi-card:hover {
+      border-color: #475569;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .kpi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .kpi-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background-color: rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+    }
+
+    .kpi-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .kpi-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+
+    .kpi-footer {
+      font-size: 12px;
+      color: var(--text-subtle);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Card Panels */
+    .panel {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-title svg {
+      width: 20px;
+      height: 20px;
+      color: #38bdf8;
+    }
+
+    /* Submissions Table */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    th {
+      background-color: rgba(15, 23, 42, 0.6);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #cbd5e1;
+    }
+
+    tr:hover td {
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      color: #38bdf8;
+    }
+
+    /* Drag & Drop Upload Zone */
+    .dropzone-container {
+      border: 2px dashed #475569;
+      border-radius: var(--radius-lg);
+      padding: 40px 24px;
+      text-align: center;
+      background-color: rgba(15, 23, 42, 0.4);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .dropzone-container:hover, .dropzone-container.dragover {
+      border-color: #0284c7;
+      background-color: rgba(2, 132, 199, 0.05);
+    }
+
+    .dropzone-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background-color: rgba(2, 132, 199, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .active-attachment-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background-color: rgba(2, 132, 199, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: var(--radius-md);
+      margin-top: 16px;
+    }
+
+    .file-meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .file-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background-color: rgba(2, 132, 199, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+    }
+
+    /* Message Generator Lab */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 992px) {
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checklist-card {
+      background-color: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+
+    .check-item.valid svg {
+      color: var(--color-success);
+    }
+
+    .preview-box {
+      width: 100%;
+      height: 400px;
+      background-color: #0b1120;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      color: #e2e8f0;
+      font-size: 13.5px;
+      line-height: 1.6;
+      font-family: inherit;
+      resize: vertical;
+      white-space: pre-wrap;
+      outline: none;
+    }
+
+    .preview-box:focus {
+      border-color: var(--border-focus);
+    }
+
+    /* Forms & Inputs */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-input, .form-select {
+      background-color: #0f172a;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2);
+    }
+
+    /* Modal / Lightbox */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .modal-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 900px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .lightbox-img-wrapper {
+      text-align: center;
+      background-color: #0b1120;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      overflow: auto;
+      max-height: 65vh;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      border-radius: var(--radius-sm);
+      transition: transform 0.2s ease;
+    }
+
+    /* Toast Notifications */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-lg);
+      min-width: 320px;
+      pointer-events: auto;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .toast-success {
+      border-left: 4px solid var(--color-success);
+    }
+
+    .toast-error {
+      border-left: 4px solid var(--color-danger);
+    }
+
+    .toast-info {
+      border-left: 4px solid var(--color-primary);
+    }
+
+    /* Running Execution Progress Modal */
+    .execution-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 150;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .execution-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      max-width: 500px;
+      width: 100%;
+      padding: 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .spinner-ring {
+      width: 56px;
+      height: 56px;
+      border: 4px solid rgba(2, 132, 199, 0.15);
+      border-top-color: #0284c7;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .progress-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .step-item.active {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .step-item.completed {
+      color: var(--color-success);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="header-container">
+      <div class="brand-section">
+        <a href="/" class="brand-logo">
+          <div class="logo-icon-box">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>Lufthansa Dispute Ops</h1>
+            <span>Automated Case & Escalation Center</span>
+          </div>
+        </a>
+
+        <div class="case-badges">
+          <span class="badge badge-primary">
+            <span class="badge-dot badge-dot-pulse"></span>
+            FB ID: 42525052
+          </span>
+          <span class="badge badge-accent">
+            SRUV-390257
+          </span>
+          <span class="badge badge-success">
+            EUR 1,200.00
+          </span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-trigger-run" class="btn btn-primary" onclick="triggerAutomationRun()">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/>
+          </svg>
+          <span>Executar Envio Agora</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-bar">
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="switchTab('overview')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
+        </svg>
+        <span>Visão Geral & Histórico</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab('ai-lab')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+        </svg>
+        <span>IA & Redações (Message Lab)</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab('attachments')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.373L8.552 18.32a1.5 1.5 0 01-2.122-2.121L15.75 6.879"/>
+        </svg>
+        <span>Anexos & Comprovantes</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab('flight-data')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+        </svg>
+        <span>Dados do Voo & Passageiro</span>
+      </button>
+
+      <button class="tab-btn" onclick="switchTab('settings')">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span>Configurações</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- TAB 1: VISÃO GERAL & HISTÓRICO -->
+    <div id="tab-overview" class="tab-content active">
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Total de Envios</span>
+            <div class="kpi-icon">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-total">-</div>
+          <div class="kpi-footer">
+            <span id="kpi-runs-sub">Submissões registradas</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Taxa de Sucesso</span>
+            <div class="kpi-icon" style="color: var(--color-success);">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-rate" style="color: var(--color-success);">-</div>
+          <div class="kpi-footer">
+            <span id="kpi-counts">0 sucessos / 0 falhas</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Último Protocolo</span>
+            <div class="kpi-icon" style="color: #38bdf8;">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-last-proto" style="font-size: 19px; color: #38bdf8;">-</div>
+          <div class="kpi-footer">
+            <span id="kpi-last-time">Sem envios ainda</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Agendamento Diário</span>
+            <div class="kpi-icon" style="color: var(--color-accent);">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+          </div>
+          <div class="kpi-value" id="kpi-schedule" style="color: #fbbf24;">09:00</div>
+          <div class="kpi-footer">
+            <span>Disparo diário automático ativo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+            <span>Histórico de Submissões & Evidências</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary" onclick="loadOverviewData()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+              <span>Atualizar</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Data / Hora</th>
+                <th>Status</th>
+                <th>Protocolo</th>
+                <th>Duração</th>
+                <th>Modo</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="submissions-tbody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Carregando dados...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: IA & REDAÇÕES (MESSAGE LAB) -->
+    <div id="tab-ai-lab" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg>
+            <span>Laboratório de Variações de IA (Inglês)</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary" onclick="copyCurrentPreview()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-1.5-.124m-7.5 10.376H15M15 7.5a3 3 0 00-3-3H9a3 3 0 00-3 3v9a3 3 0 003 3h3a3 3 0 003-3V7.5z"/></svg>
+              <span>Copiar Texto</span>
+            </button>
+            <button class="btn btn-primary" onclick="generateNewAiPreview()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+              <span>Gerar Nova Variação</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="lab-grid">
+          <div>
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label">Estilo de Redação</label>
+              <select id="select-ai-style" class="form-select" onchange="generateNewAiPreview()">
+                <option value="0">Formal Legal & Notificação Regulatória</option>
+                <option value="1">Escalação Executiva Cronológica</option>
+                <option value="2">Demanda Direta de Atendimento ao Cliente</option>
+                <option value="3">Notificação Formal de Conciliação SRUV</option>
+              </select>
+            </div>
+
+            <div class="checklist-card">
+              <span class="form-label" style="margin-bottom: 4px;">Validação de Fatos Obrigatórios (100%)</span>
+              <div class="check-item valid" id="chk-fb"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> FB ID: 42525052</div>
+              <div class="check-item valid" id="chk-sruv"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> SRUV: SRUV-390257</div>
+              <div class="check-item valid" id="chk-amt"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> Total: EUR 1,200.00 (EUR 600/pax)</div>
+              <div class="check-item valid" id="chk-hub"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> Dados no Payment Hub</div>
+              <div class="check-item valid" id="chk-days"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> Promessa não cumprida de 10 dias</div>
+              <div class="check-item valid" id="chk-yt"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> Aviso do Canal no YouTube</div>
+              <div class="check-item valid" id="chk-name"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:16px;height:16px;"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg> Assinatura Danilo Lopes de Deus</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-group">
+              <label class="form-label">Texto Gerado em Inglês</label>
+              <textarea id="ai-preview-text" class="preview-box" spellcheck="false"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ANEXOS & COMPROVANTES -->
+    <div id="tab-attachments" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.373L8.552 18.32a1.5 1.5 0 01-2.122-2.121L15.75 6.879"/></svg>
+            <span>Gerenciador de Anexos (Comprovante / Foto)</span>
+          </div>
+        </div>
+
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px;">
+          Arquivos anexados aqui são enviados automaticamente no formulário da Lufthansa. Formatos permitidos: <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.pdf</code> (até 3.7MB).
+        </p>
+
+        <!-- Drag & Drop Zone -->
+        <div id="dropzone" class="dropzone-container" onclick="document.getElementById('file-input-upload').click()">
+          <input type="file" id="file-input-upload" style="display: none;" accept=".png,.jpg,.jpeg,.pdf" onchange="handleFileSelect(event)">
+          <div class="dropzone-icon">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+          </div>
+          <h3 style="font-size: 15px; font-weight: 600;">Arraste e solte o arquivo aqui</h3>
+          <p style="font-size: 13px; color: var(--text-muted);">ou clique para selecionar do computador</p>
+        </div>
+
+        <!-- Active File Card -->
+        <div id="active-attachment-box" style="display: none;">
+          <div class="active-attachment-card">
+            <div class="file-meta">
+              <div class="file-icon">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="width:22px;height:22px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+              </div>
+              <div>
+                <h4 id="attachment-name" style="font-size: 14px; font-weight: 600;">comprovante.jpg</h4>
+                <span id="attachment-size" style="font-size: 12px; color: var(--text-muted);">150 KB • Ativo para o próximo envio</span>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-danger" onclick="deleteCurrentAttachment()">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+                <span>Remover</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: DADOS DO VOO & PASSAGEIRO -->
+    <div id="tab-flight-data" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+            <span>Parâmetros do Voo & Passageiro</span>
+          </div>
+          <button class="btn btn-primary" onclick="savePassengerData()">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <span>Salvar Alterações</span>
+          </button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Código da Reserva (PNR)</label>
+            <input type="text" id="inp-pnr" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Número do Voo</label>
+            <input type="text" id="inp-flight" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Data do Voo (DD/MM/AAAA)</label>
+            <input type="text" id="inp-date" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Número do Bilhete (13 Dígitos)</label>
+            <input type="text" id="inp-ticket" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Primeiro Nome</label>
+            <input type="text" id="inp-fname" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sobrenome</label>
+            <input type="text" id="inp-lname" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Endereço (Rua e Número)</label>
+            <input type="text" id="inp-street" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CEP / Postcode</label>
+            <input type="text" id="inp-cep" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cidade</label>
+            <input type="text" id="inp-city" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">E-mail</label>
+            <input type="email" id="inp-email" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefone</label>
+            <input type="text" id="inp-phone" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Feedback ID (Lufthansa)</label>
+            <input type="text" id="inp-fbid" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Referência Conciliação SRUV</label>
+            <input type="text" id="inp-sruv" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Valor Total Compensação</label>
+            <input type="text" id="inp-total" class="form-input">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: CONFIGURAÇÕES -->
+    <div id="tab-settings" class="tab-content">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Configurações do Agendador & Sistema</span>
+          </div>
+          <button class="btn btn-primary" onclick="saveSettings()">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+            <span>Salvar Configurações</span>
+          </button>
+        </div>
+
+        <div style="max-width: 500px; display: flex; flex-direction: column; gap: 20px;">
+          <div class="form-group">
+            <label class="form-label">Horário de Execução Diária (HH:MM)</label>
+            <input type="time" id="set-schedule-time" class="form-input" value="09:00">
+            <span style="font-size: 12px; color: var(--text-muted);">O agendador local rodará a submissão todos os dias neste horário.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Retentativa Automática em caso de Falha</label>
+            <select id="set-auto-retry" class="form-select">
+              <option value="1">Ativado (Tentar novamente após 15 minutos)</option>
+              <option value="0">Desativado</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modals -->
+  <!-- Text Viewer Modal -->
+  <div id="modal-text" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title" id="text-modal-title">Mensagem Enviada</div>
+        <button class="btn btn-secondary" style="padding: 6px;" onclick="closeModal('modal-text')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="text-modal-content" style="white-space: pre-wrap; font-size: 14px; line-height: 1.6; color: #e2e8f0;"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="copyModalText()">Copiar Texto</button>
+        <button class="btn btn-primary" onclick="closeModal('modal-text')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Evidence Lightbox Modal -->
+  <div id="modal-lightbox" class="modal-backdrop">
+    <div class="modal-card" style="max-width: 1050px;">
+      <div class="modal-header">
+        <div class="modal-title">Comprovante Visual da Tela</div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary" onclick="zoomImage(0.2)">Zoom +</button>
+          <button class="btn btn-secondary" onclick="zoomImage(-0.2)">Zoom -</button>
+          <button class="btn btn-secondary" onclick="openImageNewTab()">Abrir em Nova Aba</button>
+          <button class="btn btn-secondary" style="padding: 6px;" onclick="closeModal('modal-lightbox')">✕</button>
+        </div>
+      </div>
+      <div class="modal-body" style="padding: 12px;">
+        <div class="lightbox-img-wrapper">
+          <img id="lightbox-img" class="lightbox-img" src="" alt="Comprovante">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeModal('modal-lightbox')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Execution Progress Overlay -->
+  <div id="execution-overlay" class="execution-overlay">
+    <div class="execution-card">
+      <div class="spinner-ring"></div>
+      <h3 style="font-size: 18px; font-weight: 700;">Executando Disparo no Navegador</h3>
+      <p style="font-size: 13px; color: var(--text-muted);">
+        O robô está navegando pelo Chrome em segundo plano, preenchendo todos os dados e enviando o comprovante.
+      </p>
+
+      <div class="progress-steps">
+        <div class="step-item active" id="step-1">
+          <span>1. Inicializando Chrome Stealth com perfil</span>
+        </div>
+        <div class="step-item" id="step-2">
+          <span>2. Carregando formulário da Lufthansa</span>
+        </div>
+        <div class="step-item" id="step-3">
+          <span>3. Preenchendo dados de voo e passageiro</span>
+        </div>
+        <div class="step-item" id="step-4">
+          <span>4. Inserindo redação variada da IA & Anexo</span>
+        </div>
+        <div class="step-item" id="step-5">
+          <span>5. Submetendo e capturando recibo oficial</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script>
+    let currentPreviewText = '';
+    let currentLightboxUrl = '';
+    let currentImgZoom = 1;
+
+    // Tab Navigation
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+      const targetTab = document.getElementById('tab-' + tabId);
+      if (targetTab) targetTab.classList.add('active');
+
+      // Set active button
+      event.currentTarget.classList.add('active');
+
+      if (tabId === 'overview') loadOverviewData();
+      if (tabId === 'ai-lab') generateNewAiPreview();
+      if (tabId === 'attachments') loadAttachmentStatus();
+      if (tabId === 'flight-data') loadPassengerData();
+      if (tabId === 'settings') loadSettings();
+    }
+
+    // Toast Notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.innerHTML = `
+        <div style="font-size: 13.5px; font-weight: 500;">${message}</div>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(50%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Modal Control
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    // Load Overview Data
+    async function loadOverviewData() {
+      try {
+        const statsRes = await fetch('/api/stats');
+        const stats = await statsRes.json();
+
+        document.getElementById('kpi-total').innerText = stats.total_runs;
+        document.getElementById('kpi-rate').innerText = stats.success_rate + '%';
+        document.getElementById('kpi-counts').innerText = `${stats.success_count} sucessos / ${stats.fail_count} falhas`;
+        document.getElementById('kpi-last-proto').innerText = stats.last_success_protocol || (stats.last_run ? stats.last_run.protocol_number : '-');
+        document.getElementById('kpi-last-time').innerText = stats.last_success_time ? new Date(stats.last_success_time).toLocaleString('pt-BR') : 'Sem envios';
+        if (stats.settings && stats.settings.scheduled_time) {
+          document.getElementById('kpi-schedule').innerText = stats.settings.scheduled_time;
+        }
+
+        // Submissions Table
+        const subRes = await fetch('/api/submissions');
+        const submissions = await subRes.json();
+        const tbody = document.getElementById('submissions-tbody');
+
+        if (submissions.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 32px;">Nenhum envio registrado ainda. Clique em "Executar Envio Agora".</td></tr>';
+        } else {
+          tbody.innerHTML = submissions.map(sub => `
+            <tr>
+              <td>${new Date(sub.timestamp).toLocaleString('pt-BR')}</td>
+              <td><span class="badge ${sub.status === 'SUCCESS' ? 'badge-success' : 'badge-accent'}">${sub.status}</span></td>
+              <td><code>${sub.protocol_number || '-'}</code></td>
+              <td>${sub.execution_time_seconds ? sub.execution_time_seconds + 's' : '-'}</td>
+              <td><span style="font-size: 11px; color: var(--text-muted);">${sub.mode || 'AUTO'}</span></td>
+              <td style="display: flex; gap: 8px;">
+                <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="viewSubmissionText(${sub.id})">Texto</button>
+                ${sub.screenshot_path ? `<button class="btn btn-secondary" style="padding: 4px 8px; font-size: 12px;" onclick="viewScreenshot('${encodeURIComponent(sub.screenshot_path)}')">Comprovante</button>` : ''}
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        showToast('Erro ao carregar dados do painel: ' + err, 'error');
+      }
+    }
+
+    // Trigger Run
+    async function triggerAutomationRun() {
+      const btn = document.getElementById('btn-trigger-run');
+      const overlay = document.getElementById('execution-overlay');
+
+      btn.disabled = true;
+      overlay.style.display = 'flex';
+
+      // Animate progress steps
+      const steps = [1, 2, 3, 4, 5];
+      let stepIdx = 0;
+      const stepTimer = setInterval(() => {
+        if (stepIdx < steps.length) {
+          const el = document.getElementById(`step-${steps[stepIdx]}`);
+          if (el) el.className = 'step-item active';
+          if (stepIdx > 0) {
+            const prev = document.getElementById(`step-${steps[stepIdx - 1]}`);
+            if (prev) prev.className = 'step-item completed';
+          }
+          stepIdx++;
+        }
+      }, 7000);
+
+      try {
+        const res = await fetch('/api/run', { method: 'POST' });
+        const result = await res.json();
+        clearInterval(stepTimer);
+
+        if (result.status === 'SUCCESS') {
+          showToast(`Envio concluído com sucesso! Protocolo: ${result.protocol_number || 'Registrado'}`, 'success');
+        } else {
+          showToast(`Envio finalizado com status: ${result.status}`, 'error');
+        }
+        await loadOverviewData();
+      } catch (err) {
+        clearInterval(stepTimer);
+        showToast('Falha na automação: ' + err, 'error');
+      } finally {
+        btn.disabled = false;
+        overlay.style.display = 'none';
+      }
+    }
+
+    // AI Generator Lab
+    async function generateNewAiPreview() {
+      try {
+        const styleIdx = document.getElementById('select-ai-style').value;
+        const res = await fetch(`/api/generate-preview?style_idx=${styleIdx}`);
+        const data = await res.json();
+        currentPreviewText = data.text;
+        document.getElementById('ai-preview-text').value = data.text;
+        showToast('Nova variação em inglês gerada e validada!', 'info');
+      } catch (err) {
+        showToast('Erro ao gerar prévia da IA: ' + err, 'error');
+      }
+    }
+
+    function copyCurrentPreview() {
+      const txt = document.getElementById('ai-preview-text').value;
+      navigator.clipboard.writeText(txt);
+      showToast('Texto copiado para a área de transferência!', 'success');
+    }
+
+    // Modals Viewers
+    async function viewSubmissionText(id) {
+      try {
+        const res = await fetch('/api/submissions/' + id);
+        const data = await res.json();
+        document.getElementById('text-modal-title').innerText = `Mensagem Enviada (${new Date(data.timestamp).toLocaleString('pt-BR')})`;
+        document.getElementById('text-modal-content').innerText = data.generated_text;
+        openModal('modal-text');
+      } catch (err) {
+        showToast('Erro ao carregar texto: ' + err, 'error');
+      }
+    }
+
+    function copyModalText() {
+      const txt = document.getElementById('text-modal-content').innerText;
+      navigator.clipboard.writeText(txt);
+      showToast('Texto da mensagem copiado!', 'success');
+    }
+
+    function viewScreenshot(encodedPath) {
+      currentLightboxUrl = `/api/screenshot?path=${encodedPath}`;
+      currentImgZoom = 1;
+      const img = document.getElementById('lightbox-img');
+      img.src = currentLightboxUrl;
+      img.style.transform = `scale(1)`;
+      openModal('modal-lightbox');
+    }
+
+    function zoomImage(delta) {
+      currentImgZoom = Math.max(0.5, Math.min(3, currentImgZoom + delta));
+      document.getElementById('lightbox-img').style.transform = `scale(${currentImgZoom})`;
+    }
+
+    function openImageNewTab() {
+      if (currentLightboxUrl) window.open(currentLightboxUrl, '_blank');
+    }
+
+    // Attachment Drag & Drop
+    async function loadAttachmentStatus() {
+      try {
+        const res = await fetch('/api/attachment');
+        const data = await res.json();
+        const box = document.getElementById('active-attachment-box');
+
+        if (data.active_file) {
+          box.style.display = 'block';
+          document.getElementById('attachment-name').innerText = data.active_file;
+          document.getElementById('attachment-size').innerText = `${data.active_file_info.size_kb} KB • Ativo para upload na Lufthansa`;
+        } else {
+          box.style.display = 'none';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      await uploadFile(file);
+    }
+
+    async function uploadFile(file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const res = await fetch('/api/upload-attachment', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await res.json();
+        if (result.success) {
+          showToast(`Arquivo "${result.filename}" anexado com sucesso!`, 'success');
+          await loadAttachmentStatus();
+        }
+      } catch (err) {
+        showToast('Erro ao enviar arquivo: ' + err, 'error');
+      }
+    }
+
+    async function deleteCurrentAttachment() {
+      if (!confirm('Deseja realmente remover o arquivo anexado?')) return;
+      try {
+        await fetch('/api/attachment', { method: 'DELETE' });
+        showToast('Anexo removido.', 'info');
+        await loadAttachmentStatus();
+      } catch (err) {
+        showToast('Erro ao remover anexo: ' + err, 'error');
+      }
+    }
+
+    // Drag over styling
+    const dropzone = document.getElementById('dropzone');
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        await uploadFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    // Passenger & Flight Data
+    async function loadPassengerData() {
+      try {
+        const res = await fetch('/api/passenger-data');
+        const d = await res.json();
+        document.getElementById('inp-pnr').value = d.booking_code || '';
+        document.getElementById('inp-flight').value = d.flight_number || '';
+        document.getElementById('inp-date').value = d.flight_date || '';
+        document.getElementById('inp-ticket').value = d.ticket_number || '';
+        document.getElementById('inp-fname').value = d.first_name || '';
+        document.getElementById('inp-lname').value = d.last_name || '';
+        document.getElementById('inp-street').value = (d.street || '') + ', ' + (d.street_number || '');
+        document.getElementById('inp-cep').value = d.postal_code || '';
+        document.getElementById('inp-city').value = d.city || '';
+        document.getElementById('inp-email').value = d.email || '';
+        document.getElementById('inp-phone').value = d.phone || '';
+        document.getElementById('inp-fbid').value = d.feedback_id || '';
+        document.getElementById('inp-sruv').value = d.sruv_reference || '';
+        document.getElementById('inp-total').value = d.compensation_total || '';
+      } catch (err) {
+        showToast('Erro ao carregar dados do passageiro: ' + err, 'error');
+      }
+    }
+
+    async function savePassengerData() {
+      const streetParts = document.getElementById('inp-street').value.split(',');
+      const payload = {
+        booking_code: document.getElementById('inp-pnr').value,
+        flight_number: document.getElementById('inp-flight').value,
+        flight_date: document.getElementById('inp-date').value,
+        ticket_number: document.getElementById('inp-ticket').value,
+        first_name: document.getElementById('inp-fname').value,
+        last_name: document.getElementById('inp-lname').value,
+        street: streetParts[0]?.trim() || '',
+        street_number: streetParts[1]?.trim() || '218',
+        postal_code: document.getElementById('inp-cep').value,
+        city: document.getElementById('inp-city').value,
+        email: document.getElementById('inp-email').value,
+        phone: document.getElementById('inp-phone').value,
+        feedback_id: document.getElementById('inp-fbid').value,
+        sruv_reference: document.getElementById('inp-sruv').value,
+        compensation_total: document.getElementById('inp-total').value,
+        country: "Brazil"
+      };
+
+      try {
+        const res = await fetch('/api/passenger-data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (result.success) {
+          showToast('Dados do passageiro atualizados com sucesso!', 'success');
+        }
+      } catch (err) {
+        showToast('Erro ao salvar dados: ' + err, 'error');
+      }
+    }
+
+    // Settings
+    async function loadSettings() {
+      try {
+        const res = await fetch('/api/stats');
+        const stats = await res.json();
+        if (stats.settings) {
+          if (stats.settings.scheduled_time) document.getElementById('set-schedule-time').value = stats.settings.scheduled_time;
+          if (stats.settings.auto_retry_on_fail) document.getElementById('set-auto-retry').value = stats.settings.auto_retry_on_fail;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function saveSettings() {
+      const payload = {
+        scheduled_time: document.getElementById('set-schedule-time').value,
+        auto_retry_on_fail: document.getElementById('set-auto-retry').value
+      };
+      try {
+        const res = await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (result.success) {
+          showToast('Configurações salvas!', 'success');
+          document.getElementById('kpi-schedule').innerText = payload.scheduled_time;
+        }
+      } catch (err) {
+        showToast('Erro ao salvar configurações: ' + err, 'error');
+      }
+    }
+
+    // Init on Load
+    window.onload = () => {
+      loadOverviewData();
+      loadAttachmentStatus();
+    };
+  </script>
+</body>
+</html>

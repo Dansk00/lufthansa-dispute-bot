@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: lufthansa-dispute-bot
+    env: docker
+    plan: free
+    region: ohio
+    dockerfilePath: Dockerfile
+    healthCheckPath: /api/stats
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: HEADLESS
+        value: "true"
+      - key: ENABLE_SCHEDULER
+        value: "1"

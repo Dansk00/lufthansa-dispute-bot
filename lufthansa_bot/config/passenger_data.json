@@ -1,0 +1,22 @@
+{
+  "booking_code": "7YQXEQ",
+  "flight_number": "LH 506",
+  "flight_date": "03/01/2026",
+  "ticket_number": "2202238571223",
+  "first_name": "Danilo",
+  "last_name": "Lopes de Deus",
+  "street": "Rua deus do sol",
+  "street_number": "218",
+  "postal_code": "07044090",
+  "city": "Guarulhos",
+  "country": "Brazil",
+  "email": "dan-sk@hotmail.com",
+  "phone": "+5511980513307",
+  "document_id": "42525052",
+  "feedback_id": "42525052",
+  "sruv_reference": "SRUV-390257",
+  "compensation_total": "EUR 1,200.00",
+  "compensation_per_pax": "EUR 600.00",
+  "passengers_count": 2,
+  "promised_days": 10
+}
