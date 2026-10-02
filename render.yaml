@@ -11,5 +11,7 @@ services:
         value: 8000
       - key: HEADLESS
         value: "true"
+      - key: TZ
+        value: "America/Sao_Paulo"
       - key: ENABLE_SCHEDULER
         value: "1"

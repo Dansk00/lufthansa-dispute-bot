@@ -6,13 +6,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV HEADLESS=true
 ENV PORT=8000
+ENV TZ="America/Sao_Paulo"
 
-# Install system dependencies required for Chromium & Patchright
+# Install system dependencies required for Chromium & Patchright + Timezone Brasilia
 RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     curl \
     gnupg \
     ca-certificates \
+    tzdata \
     fonts-liberation \
     libasound2 \
     libatk-bridge2.0-0 \
@@ -33,6 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxkbcommon0 \
     libxrandr2 \
     xdg-utils \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
