@@ -57,5 +57,5 @@ RUN mkdir -p /app/lufthansa_bot/data/attachments /app/lufthansa_bot/data/evidenc
 
 EXPOSE 8000
 
-# Start FastAPI web portal with embedded daily scheduler
-CMD ["sh", "-c", "uvicorn lufthansa_bot.web.app:app --host 0.0.0.0 --port ${PORT}"]
+# Start Actor on Apify or FastAPI portal on Render/Docker
+CMD ["sh", "-c", "if [ -n \"$APIFY_IS_AT_HOME\" ]; then python3 -m lufthansa_bot.main_apify; else uvicorn lufthansa_bot.web.app:app --host 0.0.0.0 --port ${PORT:-8000}; fi"]
