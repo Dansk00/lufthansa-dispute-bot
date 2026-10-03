@@ -23,6 +23,20 @@ jobs:
           pip install -r lufthansa_bot/requirements.txt
           python -m patchright install --with-deps chromium
 
+      - name: Configurar e Ativar Cloudflare WARP (Mascara IP de Datacenter)
+        run: |
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update && sudo apt-get install -y cloudflare-warp
+          sudo systemctl start warp-svc
+          sleep 2
+          warp-cli --accept-tos registration new || true
+          warp-cli --accept-tos connect || true
+          sleep 3
+          echo "=== Verificando Rota de Saída ==="
+          curl -s https://cloudflare.com/cdn-cgi/trace || true
+          curl -s https://ipinfo.io || true
+
       - name: Executar Robô de Envio
         env:
           HEADLESS: "true"
