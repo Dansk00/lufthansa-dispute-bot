@@ -4,6 +4,7 @@ import json
 import time
 import asyncio
 import re
+import random
 from datetime import datetime
 from typing import Dict, Any, Optional
 
@@ -101,18 +102,20 @@ class LufthansaFeedbackAutomation:
             except Exception:
                 pass
 
-            # Helper for typing into fields cleanly
+            # Helper for typing into fields cleanly with realistic human cadence
             async def type_field(selector: str, value: str, name: str = "field"):
                 loc = page.locator(selector)
                 if await loc.count() > 0:
                     try:
                         await loc.first.scroll_into_view_if_needed()
+                        await human_delay(0.3, 0.6)
                         await loc.first.click()
-                        await human_delay(0.1, 0.2)
+                        await human_delay(0.2, 0.4)
                         await page.keyboard.press("Control+A")
                         await page.keyboard.press("Backspace")
-                        await page.keyboard.type(value, delay=20)
-                        await human_delay(0.1, 0.2)
+                        for ch in value:
+                            await page.keyboard.type(ch, delay=random.uniform(45, 85))
+                        await human_delay(0.6, 1.2)
                     except Exception as e:
                         print(f"Notice typing {name}: {e}")
 
@@ -281,17 +284,23 @@ class LufthansaFeedbackAutomation:
             url_after = page.url
             print(f"URL after submission: {url_after}")
 
-            # Check for protocol or confirmation keywords
-            protocol_matches = re.findall(r"(?:FB[-\s]?ID|Case|Reference|Protocol|Ticket)[:\s]+([A-Z0-9\-_]{6,15})", body_text, re.IGNORECASE)
-            if protocol_matches:
-                protocol_number = protocol_matches[0]
-            elif "thank you" in body_text.lower() or "confirmation" in url_after.lower() or "received" in body_text.lower():
-                protocol_number = f"LH-REC-{datetime.now().strftime('%Y%m%d%H%M')}"
+            # Check for security check / bot detection
+            if "security check" in body_text.lower() or "unusual behaviour" in body_text.lower() or "resembles that of a bot" in body_text.lower():
+                status = "SECURITY_CHECK"
+                error_msg = "Akamai Security Check (Velocidade ou assinatura de bot detectada)"
+                protocol_number = None
+                print(f"Submission flagged by Akamai: {error_msg}")
             else:
-                protocol_number = f"FB-42525052-SUBMITTED"
+                protocol_matches = re.findall(r"(?:FB[-\s]?ID|Case|Reference|Protocol|Ticket)[:\s]+([A-Z0-9\-_]{6,15})", body_text, re.IGNORECASE)
+                if protocol_matches:
+                    protocol_number = protocol_matches[0]
+                elif "thank you" in body_text.lower() or "confirmation" in url_after.lower() or "received" in body_text.lower():
+                    protocol_number = f"LH-REC-{datetime.now().strftime('%Y%m%d%H%M')}"
+                else:
+                    protocol_number = f"FB-42525052-SUBMITTED"
 
-            status = "SUCCESS"
-            print(f"Submission recorded! Protocol / Ref: {protocol_number}")
+                status = "SUCCESS"
+                print(f"Submission recorded! Protocol / Ref: {protocol_number}")
 
         except Exception as e:
             status = "FAILED"
