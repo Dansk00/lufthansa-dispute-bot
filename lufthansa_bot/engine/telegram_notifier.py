@@ -24,6 +24,16 @@ class TelegramNotifier:
             chat_id
             or os.environ.get("TELEGRAM_CHAT_ID")
         )
+        if not self.bot_token or not self.chat_id:
+            try:
+                from lufthansa_bot.storage.db import DatabaseManager
+                db = DatabaseManager()
+                stats = db.get_summary_stats()
+                settings = stats.get("settings", {})
+                self.bot_token = self.bot_token or settings.get("telegram_bot_token")
+                self.chat_id = self.chat_id or settings.get("telegram_chat_id")
+            except Exception:
+                pass
         self.api_base = "https://api.telegram.org/bot"
 
     def is_configured(self) -> bool:
