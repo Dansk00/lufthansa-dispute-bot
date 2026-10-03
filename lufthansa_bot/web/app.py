@@ -3,6 +3,7 @@ import json
 import mimetypes
 import shutil
 import asyncio
+from datetime import datetime
 from contextlib import asynccontextmanager
 from typing import Optional, Dict, Any
 from fastapi import FastAPI, HTTPException, Query, UploadFile, File, Body
@@ -194,6 +195,44 @@ async def generate_preview(style_idx: Optional[int] = Query(None)):
     text = ai_generator.generate(style_idx=style_idx)
     valid = ai_generator.validate_facts(text)
     return {"text": text, "valid_facts": valid}
+
+
+@app.post("/api/sync-submission")
+async def sync_submission(payload: Dict[str, Any] = Body(...)):
+    """Receives execution result from Apify cloud runner and records it in SQLite and evidence folder."""
+    import base64
+    from datetime import datetime
+
+    status = payload.get("status", "SUCCESS")
+    protocol = payload.get("protocol_number")
+    text = payload.get("generated_text", "")
+    duration = float(payload.get("duration", 0.0))
+    mode = payload.get("mode", "APIFY_SCHEDULED")
+    error_msg = payload.get("error") or payload.get("error_message")
+
+    screenshot_path = None
+    img_b64 = payload.get("screenshot_base64")
+    if img_b64:
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"cloud_receipt_{timestamp}.png"
+            dest = os.path.join(EVIDENCE_DIR, filename)
+            with open(dest, "wb") as f:
+                f.write(base64.b64decode(img_b64))
+            screenshot_path = dest
+        except Exception as e:
+            print(f"Error saving synced screenshot: {e}")
+
+    sub_id = db.record_submission(
+        status=status,
+        generated_text=text,
+        protocol_number=protocol,
+        screenshot_path=screenshot_path,
+        error_message=error_msg,
+        execution_time_seconds=duration,
+        mode=mode
+    )
+    return {"success": True, "submission_id": sub_id}
 
 
 @app.post("/api/run")
