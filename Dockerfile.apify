@@ -1,0 +1,11 @@
+FROM apify/actor-python-playwright:3.12
+
+WORKDIR /usr/src/app
+
+COPY lufthansa_bot/requirements.txt ./
+RUN pip install --no-cache-dir apify -r requirements.txt
+RUN python -m patchright install --with-deps chromium || true
+
+COPY lufthansa_bot ./lufthansa_bot
+
+CMD ["python3", "-m", "lufthansa_bot.main_apify"]

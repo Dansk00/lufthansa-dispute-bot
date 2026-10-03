@@ -30,8 +30,9 @@ FORM_URL = "https://www.lufthansa.com/gb/en/feedback-past-flight"
 class LufthansaFeedbackAutomation:
     """Executes full automated submission of Lufthansa feedback form with stealth protections."""
 
-    def __init__(self, headless: bool = False):
+    def __init__(self, headless: bool = False, proxy: Optional[dict] = None):
         self.headless = headless
+        self.proxy = proxy
         self.db = DatabaseManager()
         self.ai_gen = TextGenerator()
         self.passenger_data = self._load_passenger_data()
@@ -74,7 +75,7 @@ class LufthansaFeedbackAutomation:
         status = "PENDING"
         error_msg = None
 
-        browser_mgr = StealthBrowserManager(headless=self.headless)
+        browser_mgr = StealthBrowserManager(headless=self.headless, proxy=self.proxy)
         try:
             page = await browser_mgr.start()
 

@@ -48,7 +48,7 @@ EVIDENCE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 class StealthBrowserManager:
     """Manages stealth browser lifecycle with native Chrome and anti-fingerprint protection."""
 
-    def __init__(self, headless: Optional[bool] = None):
+    def __init__(self, headless: Optional[bool] = None, proxy: Optional[dict] = None):
         # Auto-detect headless if running in container / Linux without DISPLAY
         if headless is None:
             if os.environ.get("HEADLESS", "").lower() in ["1", "true", "yes"]:
@@ -60,6 +60,7 @@ class StealthBrowserManager:
         else:
             self.headless = headless
 
+        self.proxy = proxy or ({"server": os.environ["PROXY_SERVER"]} if os.environ.get("PROXY_SERVER") else None)
         self.playwright = None
         self.context: Optional[BrowserContext] = None
         os.makedirs(USER_DATA_DIR, exist_ok=True)
@@ -95,16 +96,20 @@ class StealthBrowserManager:
 
         exec_path = get_chrome_executable()
 
-        context = await self.playwright.chromium.launch_persistent_context(
-            user_data_dir=USER_DATA_DIR,
-            executable_path=exec_path,
-            headless=self.headless,
-            args=args,
-            viewport=None if (not self.headless and sys.platform == "win32") else {"width": 1280, "height": 900},
-            ignore_default_args=["--enable-automation"],
-            locale="en-GB",
-            timezone_id="America/Sao_Paulo"
-        )
+        launch_kwargs = {
+            "user_data_dir": USER_DATA_DIR,
+            "executable_path": exec_path,
+            "headless": self.headless,
+            "args": args,
+            "viewport": None if (not self.headless and sys.platform == "win32") else {"width": 1280, "height": 900},
+            "ignore_default_args": ["--enable-automation"],
+            "locale": "en-GB",
+            "timezone_id": "America/Sao_Paulo",
+        }
+        if self.proxy:
+            launch_kwargs["proxy"] = self.proxy
+
+        context = await self.playwright.chromium.launch_persistent_context(**launch_kwargs)
         self.context = context
 
         if context.pages:

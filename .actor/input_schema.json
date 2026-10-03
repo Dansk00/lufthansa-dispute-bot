@@ -1,0 +1,15 @@
+{
+  "title": "Lufthansa Dispute Bot Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "mode": {
+      "title": "Execution Mode",
+      "type": "string",
+      "description": "Mode of execution: REAL_RUN to submit or DRY_RUN to test",
+      "default": "REAL_RUN",
+      "editor": "select",
+      "enum": ["REAL_RUN", "DRY_RUN"]
+    }
+  }
+}

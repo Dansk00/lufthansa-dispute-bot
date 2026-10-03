@@ -1,0 +1,8 @@
+{
+  "actorSpecification": 1,
+  "name": "lufthansa-dispute-bot",
+  "title": "Lufthansa Dispute Bot & Case Tracker",
+  "description": "Automated daily Lufthansa dispute submission with residential proxy and Telegram photo reporting.",
+  "version": "1.0",
+  "dockerfile": "./Dockerfile.apify"
+}
