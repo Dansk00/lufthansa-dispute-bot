@@ -159,6 +159,26 @@ async def update_settings(payload: Dict[str, str] = Body(...)):
     return {"success": True}
 
 
+@app.post("/api/test-telegram")
+async def test_telegram():
+    from lufthansa_bot.engine.telegram_notifier import TelegramNotifier
+    notifier = TelegramNotifier()
+    if not notifier.is_configured():
+        return {
+            "success": False,
+            "configured": False,
+            "message": "Telegram não configurado. Defina TELEGRAM_BOT_TOKEN e TELEGRAM_CHAT_ID."
+        }
+    ok = notifier.notify({
+        "status": "TEST_SUCCESS",
+        "protocol_number": "TEST-TELEGRAM",
+        "duration": 2.0,
+        "generated_text": "Teste de conexão do portal para o Caso Lufthansa FB ID 42525052.",
+        "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M")
+    })
+    return {"success": ok, "configured": True, "message": "Mensagem entregue no Telegram!" if ok else "Falha ao enviar."}
+
+
 @app.get("/api/screenshot")
 async def get_screenshot(path: str = Query(...)):
     abs_path = os.path.abspath(path)

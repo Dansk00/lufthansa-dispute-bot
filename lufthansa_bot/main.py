@@ -72,6 +72,29 @@ def cmd_stats(args):
     print(f"Horário agendado: {stats['settings'].get('scheduled_time', '09:00')}")
 
 
+def cmd_test_telegram(args):
+    from datetime import datetime
+    print("=" * 60)
+    print("TESTE DE NOTIFICAÇÃO TELEGRAM")
+    print("=" * 60)
+    from lufthansa_bot.engine.telegram_notifier import TelegramNotifier
+    notifier = TelegramNotifier()
+    if not notifier.is_configured():
+        print("⚠️ Telegram não configurado!")
+        print("Defina TELEGRAM_BOT_TOKEN e TELEGRAM_CHAT_ID como variáveis de ambiente.")
+        return
+    print("Enviando mensagem de teste para o seu Telegram...")
+    ok = notifier.notify({
+        "status": "TEST_SUCCESS",
+        "protocol_number": "TEST-TELEGRAM-01",
+        "duration": 1.2,
+        "generated_text": "Mensagem de teste de notificação do Telegram para o Caso Lufthansa FB ID 42525052.",
+        "screenshot": None,
+        "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M")
+    })
+    print(f"Resultado do envio: {'✅ Entregue com sucesso!' if ok else '❌ Falha ao entregar.'}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Lufthansa Feedback Bot & Case Tracker")
     subparsers = parser.add_subparsers(dest="command", help="Comando a executar")
@@ -94,6 +117,9 @@ def main():
     # stats
     subparsers.add_parser("stats", help="Exibe estatísticas de envios registrados")
 
+    # test-telegram
+    subparsers.add_parser("test-telegram", help="Envia mensagem de teste para o Telegram")
+
     args = parser.parse_args()
 
     if args.command == "test-ai":
@@ -106,6 +132,8 @@ def main():
         cmd_schedule(args)
     elif args.command == "stats":
         cmd_stats(args)
+    elif args.command == "test-telegram":
+        cmd_test_telegram(args)
     else:
         parser.print_help()
 

@@ -148,6 +148,34 @@ class TestLufthansaBot(unittest.TestCase):
         self.assertTrue(gen_json["valid_facts"])
         self.assertIn("FB ID 42525052", gen_json["text"])
 
+    def test_telegram_notifier_formatting(self):
+        """Verifies Telegram report formatting and fail-safe handling when unconfigured."""
+        from lufthansa_bot.engine.telegram_notifier import TelegramNotifier
+        notifier = TelegramNotifier()
+        self.assertFalse(notifier.is_configured())
+
+        # Unconfigured notify should fail-safe return False and not raise
+        result = notifier.notify({
+            "status": "SUCCESS",
+            "protocol_number": "LH-REC-TEST",
+            "duration": 40.0,
+            "generated_text": "Sample letter text with FB ID 42525052",
+            "screenshot": None
+        })
+        self.assertFalse(result)
+
+        # Verify formatted caption
+        caption = notifier.format_caption({
+            "status": "SUCCESS",
+            "protocol_number": "LH-REC-TEST",
+            "duration": 40.0,
+            "generated_text": "Sample letter text with FB ID 42525052"
+        })
+        self.assertIn("42525052", caption)
+        self.assertIn("SRUV-390257", caption)
+        self.assertIn("LH-REC-TEST", caption)
+        self.assertIn("SUCCESS", caption)
+
 
 if __name__ == "__main__":
     unittest.main()

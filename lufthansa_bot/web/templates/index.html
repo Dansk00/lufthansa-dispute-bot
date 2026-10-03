@@ -1418,6 +1418,17 @@
               <option value="0">Desativado</option>
             </select>
           </div>
+
+          <div style="margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 10px;">
+            <label class="form-label">Notificações no Telegram</label>
+            <span style="font-size: 12.5px; color: var(--text-muted);">
+              Receba o relatório do envio e a foto oficial do comprovante da Lufthansa direto no seu celular.
+            </span>
+            <button class="btn btn-secondary" onclick="testTelegramNotification()">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"/></svg>
+              <span>Testar Conexão Telegram</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1871,6 +1882,21 @@
         }
       } catch (err) {
         showToast('Erro ao salvar configurações: ' + err, 'error');
+      }
+    }
+
+    async function testTelegramNotification() {
+      showToast('Enviando mensagem de teste para o Telegram...', 'info');
+      try {
+        const res = await fetch('/api/test-telegram', { method: 'POST' });
+        const result = await res.json();
+        if (result.success) {
+          showToast('Relatório de teste entregue no seu Telegram com sucesso!', 'success');
+        } else {
+          showToast(result.message || 'Falha ao entregar no Telegram.', 'error');
+        }
+      } catch (err) {
+        showToast('Erro ao acionar Telegram: ' + err, 'error');
       }
     }
 

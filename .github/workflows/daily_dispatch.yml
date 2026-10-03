@@ -26,6 +26,8 @@ jobs:
       - name: Executar Robô de Envio
         env:
           HEADLESS: "true"
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python lufthansa_bot/main.py run --headless
 

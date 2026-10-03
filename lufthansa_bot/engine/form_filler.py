@@ -297,6 +297,23 @@ class LufthansaFeedbackAutomation:
             mode=mode
         )
 
+        # Notify via Telegram if configured
+        try:
+            from lufthansa_bot.engine.telegram_notifier import TelegramNotifier
+            tg_notifier = TelegramNotifier()
+            if tg_notifier.is_configured():
+                print("[Telegram] Dispatching execution report...")
+                tg_notifier.notify({
+                    "status": status,
+                    "protocol_number": protocol_number,
+                    "duration": duration,
+                    "generated_text": text_to_send,
+                    "screenshot": screenshot_path,
+                    "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M")
+                })
+        except Exception as e:
+            print(f"[Telegram] Notice: {e}")
+
         return {
             "submission_id": sub_id,
             "status": status,
