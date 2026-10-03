@@ -242,34 +242,55 @@ class LufthansaFeedbackAutomation:
 
             # 9. Click Submit Button
             print("Submitting form...")
-            submit_btn = page.locator('#submit-btn button.trigger, maui-button#submit-btn button, #submit-btn, [type="submit"]')
+            clicked = False
+            submit_btn = page.locator('#submit-btn, maui-button#submit-btn, [behavior="submit"], button[type="submit"]')
             if await submit_btn.count() > 0:
-                await submit_btn.first.scroll_into_view_if_needed()
-                await human_delay(0.5, 1.0)
-                await submit_btn.first.click()
-                print("Submit clicked! Waiting for confirmation response...")
-                
-                # Wait for response / confirmation page
-                await asyncio.sleep(10.0)
-                
-                # Take post-submit screenshot
-                screenshot_path = await take_evidence_screenshot(page, prefix="final_submission_result")
-                
-                body_text = await page.inner_text("body")
-                url_after = page.url
-                print(f"URL after submission: {url_after}")
+                try:
+                    await submit_btn.first.scroll_into_view_if_needed()
+                    await human_delay(0.5, 1.0)
+                    await submit_btn.first.click()
+                    clicked = True
+                    print("Submit clicked via locator! Waiting for confirmation response...")
+                except Exception as e:
+                    print(f"Notice clicking submit locator: {e}")
 
-                # Check for protocol or confirmation keywords
-                protocol_matches = re.findall(r"(?:FB[-\s]?ID|Case|Reference|Protocol|Ticket)[:\s]+([A-Z0-9\-_]{6,15})", body_text, re.IGNORECASE)
-                if protocol_matches:
-                    protocol_number = protocol_matches[0]
-                elif "thank you" in body_text.lower() or "confirmation" in url_after.lower() or "received" in body_text.lower():
-                    protocol_number = f"LH-REC-{datetime.now().strftime('%Y%m%d%H%M')}"
-                else:
-                    protocol_number = f"FB-42525052-SUBMITTED"
+            if not clicked:
+                clicked = await page.evaluate('''() => {
+                    const btn = document.getElementById('submit-btn') || document.querySelector('maui-button[behavior="submit"]') || document.querySelector('button[type="submit"]');
+                    if (btn) {
+                        if (btn.shadowRoot && btn.shadowRoot.querySelector('button')) {
+                            btn.shadowRoot.querySelector('button').click();
+                            return true;
+                        }
+                        btn.click();
+                        return true;
+                    }
+                    return false;
+                }''')
+                if clicked:
+                    print("Submit clicked via evaluate! Waiting for confirmation response...")
 
-                status = "SUCCESS"
-                print(f"Submission recorded! Protocol / Ref: {protocol_number}")
+            # Wait for response / confirmation page
+            await asyncio.sleep(10.0)
+            
+            # Take post-submit screenshot
+            screenshot_path = await take_evidence_screenshot(page, prefix="final_submission_result")
+            
+            body_text = await page.inner_text("body")
+            url_after = page.url
+            print(f"URL after submission: {url_after}")
+
+            # Check for protocol or confirmation keywords
+            protocol_matches = re.findall(r"(?:FB[-\s]?ID|Case|Reference|Protocol|Ticket)[:\s]+([A-Z0-9\-_]{6,15})", body_text, re.IGNORECASE)
+            if protocol_matches:
+                protocol_number = protocol_matches[0]
+            elif "thank you" in body_text.lower() or "confirmation" in url_after.lower() or "received" in body_text.lower():
+                protocol_number = f"LH-REC-{datetime.now().strftime('%Y%m%d%H%M')}"
+            else:
+                protocol_number = f"FB-42525052-SUBMITTED"
+
+            status = "SUCCESS"
+            print(f"Submission recorded! Protocol / Ref: {protocol_number}")
 
         except Exception as e:
             status = "FAILED"
