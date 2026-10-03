@@ -16,22 +16,26 @@ class TelegramNotifier:
     """Sends real-time execution reports with screenshots directly to Telegram."""
 
     def __init__(self, bot_token: Optional[str] = None, chat_id: Optional[str] = None):
-        self.bot_token = (
-            bot_token
-            or os.environ.get("TELEGRAM_BOT_TOKEN")
-        )
-        self.chat_id = (
-            chat_id
-            or os.environ.get("TELEGRAM_CHAT_ID")
-        )
-        if not self.bot_token or not self.chat_id:
+        if bot_token is not None:
+            self.bot_token = bot_token
+        else:
+            self.bot_token = os.environ.get("TELEGRAM_BOT_TOKEN")
+
+        if chat_id is not None:
+            self.chat_id = chat_id
+        else:
+            self.chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+
+        if self.bot_token is None or self.chat_id is None:
             try:
                 from lufthansa_bot.storage.db import DatabaseManager
                 db = DatabaseManager()
                 stats = db.get_summary_stats()
                 settings = stats.get("settings", {})
-                self.bot_token = self.bot_token or settings.get("telegram_bot_token")
-                self.chat_id = self.chat_id or settings.get("telegram_chat_id")
+                if self.bot_token is None:
+                    self.bot_token = settings.get("telegram_bot_token")
+                if self.chat_id is None:
+                    self.chat_id = settings.get("telegram_chat_id")
             except Exception:
                 pass
         self.api_base = "https://api.telegram.org/bot"

@@ -199,7 +199,7 @@ class LufthansaFeedbackAutomation:
             await type_field("#form-text-228375568, [name='feedbackId']", self.passenger_data["feedback_id"], "Reference Number")
 
             print("Filling Feedback Message...")
-            textarea_loc = page.locator('maui-textarea[name="additionalText"] textarea, textarea[name="additionalText"]')
+            textarea_loc = page.locator('maui-textarea[name="additionalText"] textarea, textarea[name="additionalText"], textarea')
             if await textarea_loc.count() > 0:
                 await textarea_loc.first.scroll_into_view_if_needed()
                 await textarea_loc.first.click()
@@ -208,11 +208,11 @@ class LufthansaFeedbackAutomation:
                 await page.keyboard.type(text_to_send, delay=3)
             else:
                 await page.evaluate('''(txt) => {
-                    const el = document.querySelector('maui-textarea[name="additionalText"] textarea') || document.querySelector('textarea[name="additionalText"]');
+                    const el = document.querySelector('maui-textarea[name="additionalText"] textarea') || document.querySelector('textarea[name="additionalText"]') || document.querySelector('textarea');
                     if (el) {
                         el.value = txt;
-                        el.dispatchEvent(new Event('input', {{ bubbles: true }}));
-                        el.dispatchEvent(new Event('change', {{ bubbles: true }}));
+                        el.dispatchEvent(new Event('input', { bubbles: true }));
+                        el.dispatchEvent(new Event('change', { bubbles: true }));
                     }
                 }''', text_to_send)
 

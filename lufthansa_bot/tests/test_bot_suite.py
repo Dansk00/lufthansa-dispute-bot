@@ -151,11 +151,11 @@ class TestLufthansaBot(unittest.TestCase):
     def test_telegram_notifier_formatting(self):
         """Verifies Telegram report formatting and fail-safe handling when unconfigured."""
         from lufthansa_bot.engine.telegram_notifier import TelegramNotifier
-        notifier = TelegramNotifier()
-        self.assertFalse(notifier.is_configured())
+        notifier_empty = TelegramNotifier(bot_token="", chat_id="")
+        self.assertFalse(notifier_empty.is_configured())
 
         # Unconfigured notify should fail-safe return False and not raise
-        result = notifier.notify({
+        result = notifier_empty.notify({
             "status": "SUCCESS",
             "protocol_number": "LH-REC-TEST",
             "duration": 40.0,
@@ -165,6 +165,7 @@ class TestLufthansaBot(unittest.TestCase):
         self.assertFalse(result)
 
         # Verify formatted caption
+        notifier = TelegramNotifier()
         caption = notifier.format_caption({
             "status": "SUCCESS",
             "protocol_number": "LH-REC-TEST",
