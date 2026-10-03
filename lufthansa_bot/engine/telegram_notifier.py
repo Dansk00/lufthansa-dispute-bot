@@ -53,10 +53,13 @@ class TelegramNotifier:
         duration = submission_data.get("duration", 0)
         timestamp = submission_data.get("timestamp") or datetime.now().strftime("%d/%m/%Y %H:%M")
         
-        # Format text preview snippet (first 180 chars)
+        # Format text preview snippet (max 120 chars to guarantee caption safety)
         text_preview = submission_data.get("generated_text", "")
-        if len(text_preview) > 180:
-            text_preview = text_preview[:180] + "..."
+        if len(text_preview) > 120:
+            text_preview = text_preview[:120] + "..."
+
+        error_msg = submission_data.get("error_message") or submission_data.get("error")
+        error_line = f"\n⚠️ <b>Erro/Motivo:</b> <code>{error_msg[:250]}</code>\n" if error_msg else ""
 
         caption = (
             f"✈️ <b>RELATÓRIO DE DISPARO — LUFTHANSA</b>\n"
@@ -67,7 +70,8 @@ class TelegramNotifier:
             f"📊 <b>STATUS:</b> {status_icon} <b>{status}</b>\n"
             f"📝 <b>Protocolo:</b> <code>{protocol}</code>\n"
             f"⏱️ <b>Duração:</b> {duration}s\n"
-            f"📅 <b>Data/Hora:</b> {timestamp}\n\n"
+            f"📅 <b>Data/Hora:</b> {timestamp}\n"
+            f"{error_line}\n"
             f"✉️ <b>PRÉVIA DA MENSAGEM:</b>\n"
             f"<i>{text_preview}</i>\n"
             f"━━━━━━━━━━━━━━━━━━━━━━\n"

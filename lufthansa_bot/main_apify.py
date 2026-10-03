@@ -21,7 +21,7 @@ async def main():
         Actor.log.info(f"Execution Mode: {mode}")
 
         # 2. Configure Apify Residential Proxy (Brazil)
-        proxy_url = None
+        proxy_dict = None
         try:
             Actor.log.info("Requesting Apify Residential Proxy (Brazil)...")
             proxy_configuration = await Actor.create_proxy_configuration(
@@ -31,11 +31,17 @@ async def main():
             if proxy_configuration:
                 proxy_url = await proxy_configuration.new_url()
                 Actor.log.info("Apify Residential Proxy obtained successfully!")
+                from urllib.parse import urlsplit
+                u = urlsplit(proxy_url)
+                proxy_dict = {
+                    "server": f"{u.scheme}://{u.hostname}:{u.port}",
+                    "username": u.username or "",
+                    "password": u.password or ""
+                }
         except Exception as e:
             Actor.log.warning(f"Failed to obtain residential proxy, using default network: {e}")
 
         # 3. Execute Lufthansa Automation with Residential Proxy
-        proxy_dict = {"server": proxy_url} if proxy_url else None
         automation = LufthansaFeedbackAutomation(headless=True, proxy=proxy_dict)
         
         Actor.log.info("Navigating and submitting Lufthansa feedback form...")
@@ -54,18 +60,6 @@ async def main():
                 Actor.log.info("Receipt screenshot saved to Apify Key-Value Store.")
             except Exception as e:
                 Actor.log.warning(f"Error saving screenshot to Apify store: {e}")
-
-        # 5. Dispatch Report & Photo to Telegram
-        try:
-            notifier = TelegramNotifier()
-            if notifier.is_configured():
-                Actor.log.info("Sending report and screenshot to Telegram...")
-                sent = notifier.notify(result)
-                Actor.log.info(f"Telegram notification sent: {sent}")
-            else:
-                Actor.log.warning("Telegram not configured in Actor environment variables.")
-        except Exception as e:
-            Actor.log.warning(f"Error dispatching to Telegram: {e}")
 
 
 if __name__ == "__main__":

@@ -331,6 +331,7 @@ class LufthansaFeedbackAutomation:
                     "duration": duration,
                     "generated_text": text_to_send,
                     "screenshot": screenshot_path,
+                    "error_message": error_msg,
                     "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M")
                 })
         except Exception as e:
